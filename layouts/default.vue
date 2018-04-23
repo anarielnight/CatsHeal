@@ -7,7 +7,7 @@
                     <nuxt/>
 
                     <v-bottom-nav absolute :value="true" :active.sync="e1" color="transparent">
-                        <v-btn flat color="teal" value="cats" href="/profile">
+                        <v-btn flat color="teal" value="cats" href="/petlist">
                             <span>Котики</span>
                             <v-icon>pets</v-icon>
                         </v-btn>
@@ -29,19 +29,13 @@
 
 <script>
     const pages = {
-        'profile': 'cats',
+        'petlist': 'cats',
         'index':'doses',
         'formula':'forms'
     }
 
-    function paintButton() {
-
-    }
-
     export default {
       data() {
-console.log(this.$route.name);
-
         return {
           e1: pages[this.$route.name]
         }

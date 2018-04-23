@@ -7,7 +7,7 @@
            :size=128
            class="grey lighten-4"
          >
-           <img src="~/assets/Sami.jpg" alt="avatar">
+           <img :src="pet.img" alt="avatar">
          </v-avatar>
       </v-flex>
 
@@ -36,32 +36,30 @@
 
 <script>
 
+const fields = {
+  name: 'Имя',
+  age: 'Возраст',
+  weight: 'Вес',
+  race: 'Раса'
+}
+
 let pets = {
   components: {
   },
+
   data() {
+    console.log('Id', this.$store.state.pets[this.$route.params.id] );
+    const pet = this.$store.state.pets[this.$route.params.id]; //Объект всей хуйни
+    const items = Object.keys(pet).map(key => {
+      return {prop: fields[key], value: pet[key]}; //Формируем массив объектов формата [{prop: '', value: ''}]
+    });
+
     return {
       color: "success",
       name: "Редактировать",
       e1: 'cats',
-      items: [
-        {
-          prop: 'Имя',
-          value: 'Белла'
-        },
-        {
-          prop: 'Возраст',
-          value: 9/12
-        },
-        {
-          prop: 'Раса',
-          value: 'Каджит'
-        },
-        {
-          prop: 'Вес',
-          value: 2.5
-        }
-      ]
+      pet,
+      items: items.filter(item => item.prop)
     }
   },
   methods: {

@@ -28,13 +28,13 @@
 <script>
 
 import * as calc from '~/pages/formula';
-import * as pet from '~/pages/profile';
+//import * as pet from '~/pages/profile';
 
 
 //const calc_function = calc.default.methods.calculate;
-const weight = pet.default.data().items[3].value;
-const age = pet.default.data().items[1].value;
-console.log(age);
+//const weight = pet.default.data().items[3].value;
+//const age = pet.default.data().items[1].value;
+//console.log(age);
 
 export default {
 
@@ -47,7 +47,7 @@ export default {
       items: [
         {
           prop: 'Корм',
-          value: calc.default.methods.calculate(weight, age)
+          value: 45 //calc.default.methods.calculate(weight, age)
         }
       ]
     }
