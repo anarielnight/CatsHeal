@@ -1,100 +1,54 @@
 <template>
+  <v-layout row>
+      <v-flex xs12 sm6 offset-sm3>
+        <v-card>
 
-<v-app>
-   <v-content>
-       <v-container grid-list-md>
-           <v-layout row wrap>
-              <v-flex sm6>
-                 <v-avatar
-                   :size=128
-                   class="grey lighten-4"
-                 >
-                   <img src="~/assets/Bella.jpg" alt="avatar">
-                 </v-avatar>
-              </v-flex>
-              <v-flex sm6>
-                 <v-btn @click="onClick" :color="color"> {{this.name}} </v-btn>
-              </v-flex>
-              <v-flex sm12>
-                  <v-data-table
-                     :items="items"
-                     hide-actions
-                     hide-headers
-                     class="elevation-1"
-                   >
-                     <template slot="items" slot-scope="props">
-                       <td class="text-xs-right">{{ props.item.prop }}</td>
-                       <td class="text-xs-right">{{ props.item.value }}</td>
-                     </template>
-                   </v-data-table>
-              </v-flex>
+         <v-list two-line>
+            <template v-for="(item, index) in items">
 
-              <v-bottom-nav absolute :value="true" :active.sync="e1" color="transparent">
-                  <v-btn flat color="teal" value="cats" href="/profile">
-                      <span>Котики</span>
-                      <v-icon>pets</v-icon>
-                  </v-btn>
-                  <v-btn flat color="teal" value="doses" href="/">
-                      <span>Дозировки</span>
-                      <v-icon>healing</v-icon>
-                  </v-btn>
-                  <v-btn flat color="teal" value="forms" href="/formula">
-                      <span>Препараты</span>
-                      <v-icon>event_note</v-icon>
-                  </v-btn>
-              </v-bottom-nav>
+              <v-divider v-if="item.divider" :inset="item.inset" :key="index"></v-divider>
 
-           </v-layout>
-      </v-container>
+              <v-list-tile avatar v-else :key="item.title" href="/profile">
+                  <v-list-tile-avatar>
+                      <img :src= "item.img" >
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                      <v-list-tile-title v-html="item.name"></v-list-tile-title>
+                      <v-list-tile-sub-title v-html="item.race"></v-list-tile-sub-title>
+                  </v-list-tile-content>
+              </v-list-tile>
+              <v-divider v-if="index + 1 < items.length" :key="`divider-${index}`"></v-divider>
+            </template>
+          </v-list>
 
-   </v-content>
- </v-app>
+        </v-card>
+      </v-flex>
+    </v-layout>
 </template>
+<!--
+  <ul>
+    <li v-for="item in items" :key="item.name">
+      {{item.name}}
+    </li>
+  </ul> -->
+
 
 <script>
 
-import Logo from '~/components/AppLogo';
-
 export default {
+
   components: {
-    Logo
   },
-  data() {
-    return {
-      color: "success",
-      name: "Редактировать",
-      showLogo: true,
-      items: [
-        {
-          prop: 'Имя',
-          value: 'Белла'
-        },
-        {
-          prop: 'Возраст',
-          value: '9 мес'
-        },
-        {
-          prop: 'Раса',
-          value: 'Каджит'
-        },
-        {
-          prop: 'Вес',
-          value: 2.5
-        }
-      ],
-        e1: 'recent'
-    }
+  computed: {
+
+      items() {
+        return this.$store.state.pets
+      }
+
   },
   methods: {
     onClick() {
-      if (this.color === "success") {
-        this.color = "error",
-        this.name = "Сохранить"
-      } else {
-        this.color = "success",
-        this.name = "Редактировать"
-      }
-      this.showLogo = !this.showLogo;
+
     }
   }
 }

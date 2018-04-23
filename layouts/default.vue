@@ -1,8 +1,53 @@
 <template>
-  <div>
-    <nuxt/>
-  </div>
+    <v-app>
+        <v-content>
+            <v-container grid-list-md>
+                <v-layout row wrap>
+
+                    <nuxt/>
+
+                    <v-bottom-nav absolute :value="true" :active.sync="e1" color="transparent">
+                        <v-btn flat color="teal" value="cats" href="/profile">
+                            <span>Котики</span>
+                            <v-icon>pets</v-icon>
+                        </v-btn>
+                        <v-btn flat color="teal" value="doses" href="/">
+                            <span>Дозировки</span>
+                            <v-icon>healing</v-icon>
+                        </v-btn>
+                        <v-btn flat color="teal" value="forms" href="/formula">
+                            <span>Препараты</span>
+                            <v-icon>event_note</v-icon>
+                        </v-btn>
+                    </v-bottom-nav>
+
+                </v-layout>
+            </v-container>
+        </v-content>
+    </v-app>
 </template>
+
+<script>
+    const pages = {
+        'profile': 'cats',
+        'index':'doses',
+        'formula':'forms'
+    }
+
+    function paintButton() {
+
+    }
+
+    export default {
+      data() {
+console.log(this.$route.name);
+
+        return {
+          e1: pages[this.$route.name]
+        }
+      }
+    }
+</script>
 
 <style>
 html {
@@ -14,6 +59,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  background-color: #98FF98;
 }
 
 *, *:before, *:after {
