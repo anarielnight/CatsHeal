@@ -30,6 +30,7 @@
 <script>
     const pages = {
         'petlist': 'cats',
+        'profile-id': 'cats',
         'index':'doses',
         'formula':'forms'
     }
