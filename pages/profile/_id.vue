@@ -1,7 +1,6 @@
 <template>
 
-   <v-layout row wrap>
-
+   <v-layout row wrap v-if="!editMode">
       <v-flex sm6>
          <v-avatar
            :size=128
@@ -12,7 +11,7 @@
       </v-flex>
 
       <v-flex sm6>
-         <v-btn @click="onClick" :color="color"> {{this.name}} </v-btn>
+         <v-btn @click="onClick" color="success">Редактировать</v-btn>
       </v-flex>
 
       <v-flex sm12>
@@ -28,13 +27,54 @@
              </template>
            </v-data-table>
       </v-flex>
+  </v-layout>
 
+  <v-layout row wrap v-else>
+    <v-flex sm6>
+      <v-avatar
+        :size=128
+        class="grey lighten-4"
+      >
+        <img :src="pet.img" alt="avatar">
+      </v-avatar>
+    </v-flex>
 
-   </v-layout>
+    <v-flex sm6>
+      <v-btn @click="onClick" color="error">Отменить</v-btn>
+    </v-flex>
+
+    <v-form>
+      <v-text-field
+          name="name"
+          label="Имя"
+          id="name"
+          :value="pet.name"
+      ></v-text-field>
+      <v-text-field
+          name="age"
+          label="Возраст"
+          id="age"
+          :value="pet.age"
+      ></v-text-field>
+      <v-text-field
+          name="weight"
+          label="Вес"
+          id="weight"
+          :value="pet.weight"
+      ></v-text-field>
+      <v-select
+          :items="race"
+          label="Раса"
+          :value="pet.race"
+      ></v-select>
+    </v-form>
+  </v-layout>
 
 </template>
 
 <script>
+
+import {RACES} from '~/store/index';
 
 const fields = {
   name: 'Имя',
@@ -48,31 +88,28 @@ let pets = {
   },
 
   data() {
-    console.log('Id', this.$store.state.pets[this.$route.params.id] );
+
     const pet = this.$store.state.pets[this.$route.params.id]; //Объект всей хуйни
     const items = Object.keys(pet).map(key => {
       return {prop: fields[key], value: pet[key]}; //Формируем массив объектов формата [{prop: '', value: ''}]
     });
 
     return {
-      color: "success",
-      name: "Редактировать",
       e1: 'cats',
       pet,
+      race: Object.values(RACES),
+      editMode: true,
       items: items.filter(item => item.prop)
     }
   },
   methods: {
     onClick() {
-      if (this.color === "success") {
-        this.color = "error",
-        this.name = "Сохранить"
-      } else {
-        this.color = "success",
-        this.name = "Редактировать"
-      }
-      this.showLogo = !this.showLogo;
+        this.editMode = !this.editMode;
     }
+  },
+  mounted() {
+    localStorage.setItem('myCat', 'Tom');
+    console.log(window.localStorage);
   }
 }
 export default pets;

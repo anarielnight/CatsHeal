@@ -1,4 +1,4 @@
-const RACES = {
+export const RACES = {
   KHAJIIT: 'Каджит',
   VORGEN: 'Ворген',
   NERUB: 'Нерубианец'
