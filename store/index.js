@@ -34,5 +34,57 @@ export const state = () => ({
 })
 
 export const mutations = {
+    addPet (state, {name, age, weight, race}) {
+        state.pets.push({
+            isDel: false,
+            name,
+            age,
+            weight,
+            race,
+            img: 'http://www.tp-proekt.ru/images/default.png'
+        });
+    },
+    updatePet (state, {id, name, age, weight, race}) {
+        const pet = state.pets[id];
+        if (!pet) {
+            return;
+        }
+        
+        Object.assign(state.pets[id], {
+            name,
+            age,
+            weight,
+            race
+        });
+    },
+    deletePet (state, id) {
+        state.pets[id].isDel = true;
+    },
+    restorePet (state, id) {
+        state.pets[id].isDel = false;
+    }
+}
 
+export const actions = {
+    addPet ({ commit, dispatch }, pet) {
+        commit('addPet', pet);
+
+        dispatch('saveData');
+    },
+    updatePet ({ commit, dispatch }, pet) {
+        commit('updatePet', pet);
+
+        dispatch('saveData');
+    },
+    deletePet ({ commit, dispatch }, id) {
+        commit('deletePet', id);
+
+        dispatch('saveData');
+    },
+    restorePet ({ commit, dispatch }, id) {
+        commit('restorePet', id);
+
+        dispatch('saveData');
+    },
+    saveData () {}
 }
