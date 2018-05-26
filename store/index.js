@@ -49,7 +49,7 @@ export const mutations = {
         if (!pet) {
             return;
         }
-        
+
         Object.assign(state.pets[id], {
             name,
             age,
@@ -62,10 +62,22 @@ export const mutations = {
     },
     restorePet (state, id) {
         state.pets[id].isDel = false;
+    },
+    fillStore (state, newStore) {
+        Object.assign(state, newStore);
     }
 }
 
 export const actions = {
+    fillStore ({ commit }) {
+        const savedStore = localStorage.getItem('store');
+        try {
+            const newStore = JSON.parse(savedStore);
+            commit('fillStore', newStore);
+        } catch (error) {
+            console.error(error);
+        }
+    },
     addPet ({ commit, dispatch }, pet) {
         commit('addPet', pet);
 
@@ -86,5 +98,7 @@ export const actions = {
 
         dispatch('saveData');
     },
-    saveData () {}
+    saveData ({ state }) {
+        localStorage.setItem('store', JSON.stringify(state));
+    }
 }
