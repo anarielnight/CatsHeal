@@ -117,7 +117,7 @@ let pets = {
             weight: pet.weight,
             petId,
             race: Object.values(RACES),
-            editMode: true,
+            editMode: true
         }
     },
     methods: {
